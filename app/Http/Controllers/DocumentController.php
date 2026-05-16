@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Document;
+use App\Models\DocumentHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -45,8 +46,9 @@ class DocumentController extends Controller
      */
     public function show(string $id)
     {
-        $document = Document::find($id);
-        return view('documents.show', compact('document'));
+         $document = Document::findOrFail($id);
+         
+         return view('documents.show', compact('document'));
     }
 
     /**
@@ -65,6 +67,12 @@ class DocumentController extends Controller
     public function update(Request $request, string $id)
     {
         $document = Document::find($id);
+
+        DocumentHistory::create([
+            'document_id' => $document->id,
+            'user_id' => Auth::id(),
+            'content' => $document->content,
+        ]);
         
         $document->update([
         'title' => $request->title,
