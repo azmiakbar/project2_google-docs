@@ -1,3 +1,16 @@
+<form method="POST" action="{{ route('logout') }}">
+
+    @csrf
+
+    <button type="submit">
+        Logout
+    </button>
+
+</form>
+
+<br>
+
+<meta http-equiv="refresh" content="5">
 <h1>Daftar Dokumen</h1>
 
 <a href="/documents/create">Buat Dokumen Baru</a>
@@ -15,6 +28,10 @@
         {{ $document->content }}
 
         <br>
+
+        <a href="/documents/{{ $document->id }}">
+            Open
+        </a>
 
         <a href="/documents/{{ $document->id }}/edit">
             Edit

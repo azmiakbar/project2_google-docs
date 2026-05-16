@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentController extends Controller
 {
@@ -11,9 +12,9 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        $documents = Document::all();
-        
-        return view('documents.index', compact('documents'));
+    $documents = Document::where('user_id', Auth::id())->get();
+
+    return view('documents.index', compact('documents'));
     }
 
     /**
@@ -30,6 +31,7 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         Document::create([
+        'user_id' => Auth::id(),
         'title' => $request->title,
         'content' => $request->content,
         
@@ -43,7 +45,8 @@ class DocumentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $document = Document::find($id);
+        return view('documents.show', compact('document'));
     }
 
     /**
