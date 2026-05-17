@@ -1,17 +1,17 @@
 # Real-Time Collaborative Document Editor (Google Docs)
 
 ## Deskripsi Project
-Project ini merupakan aplikasi collaborative document editor berbasis web yang dibuat menggunakan Laravel. Aplikasi ini dirancang menyerupai konsep dasar Google Docs dimana banyak user dapat membuka, mengedit, dan membagikan document secara online melalui share link.
+Project ini merupakan aplikasi collaborative document editor berbasis web yang dibuat menggunakan Laravel. Sistem ini dirancang menyerupai konsep dasar Google Docs dimana banyak user dapat membuka, mengedit secara online melalui share link.
 
-Saat ini aplikasi sudah mendukung authentication, CRUD document, multi-user editing dasar, collaboration simulation, live user presence, version history, dan conflict detection.
+Project ini mendukung authentication, CRUD document, collaboration system, version history, conflict resolution, activity tracking, dan rich text editor.
 
 ---
 
-# Fitur yang Sudah Dibuat
+# Fitur Utama
 
 ## Authentication
-- Login User
 - Register User
+- Login User
 - Logout User
 
 ## CRUD Document
@@ -20,26 +20,28 @@ Saat ini aplikasi sudah mendukung authentication, CRUD document, multi-user edit
 - Update Document
 - Delete Document
 
-## Document System
-- Open Document
-- Document Per User
-- Share Document Link
-- Multi-device Access
-
 ## Collaboration Features
 - Multi-user Editing Dasar
-- Collaboration Simulation
-- Live User Presence
 - Share Link Collaboration
+- Multi-device Access
+- Live User Presence
+- Activity Tracking
 - Realtime Foundation menggunakan Laravel Reverb
 
 ## Versioning & Conflict System
 - Version History
 - Menyimpan Riwayat Perubahan Document
 - Menyimpan Isi Lama Document
-- Menyimpan User yang Melakukan Perubahan
-- Conflict Detection
+- Conflict Resolution
 - Warning ketika document sudah diubah user lain
+
+## Rich Text Editor
+- CKEditor Integration
+- Bold Text
+- Italic Text
+- Heading
+- Bullet List
+- Toolbar Formatting
 
 ---
 
@@ -48,11 +50,12 @@ Saat ini aplikasi sudah mendukung authentication, CRUD document, multi-user edit
 - Laravel Breeze
 - Laravel Reverb
 - Laravel Echo
+- CKEditor 5
 - PHP
 - Composer
+- SQLite
 - Node.js
 - NPM
-- SQLite
 - Tailwind CSS
 - Git
 - GitHub
@@ -63,52 +66,46 @@ Saat ini aplikasi sudah mendukung authentication, CRUD document, multi-user edit
 
 - [x] Setup Laravel Project
 - [x] Install Laravel Breeze
-- [x] Authentication Login
-- [x] Authentication Register
-- [x] Authentication Logout
+- [x] Authentication
 - [x] CRUD Document
-- [x] Open Document
-- [x] Share Link Document
+- [x] Share Link Collaboration
 - [x] Multi-device Access
 - [x] Multi-user Editing Dasar
-- [x] Collaboration Simulation
 - [x] Live User Presence
+- [x] Activity Tracking
 - [x] Version History
-- [x] Conflict Detection
-- [x] Realtime Foundation (Laravel Reverb)
+- [x] Conflict Resolution/Detection
+- [x] Rich Text Editor
+- [x] Toolbar Formatting
+- [x] Realtime Foundation
 
-## Fitur yang Masih Dalam Pengembangan
+## Fitur Dalam Pengembangan
 - [ ] Full Realtime Collaborative Editing
-- [ ] Live Cursor Tracking
+- [ ] Live Cursor Tracking Realtime
 
 ---
 
 # Struktur Project
 
-## Model
-- `Document.php`
-- `DocumentHistory.php`
-- `DocumentPresence.php`
+## Models
+- Document.php
+- DocumentHistory.php
+- DocumentPresence.php
 
-## Controller
-- `DocumentController.php`
+## Controllers
+- DocumentController.php
 
-## Event
-- `DocumentUpdated.php`
-
-## Migration
-- `create_documents_table.php`
-- `create_document_histories_table.php`
-- `create_document_presences_table.php`
+## Events
+- DocumentUpdated.php
 
 ## Views
-- `documents/index.blade.php`
-- `documents/create.blade.php`
-- `documents/edit.blade.php`
-- `documents/show.blade.php`
+- documents/index.blade.php
+- documents/create.blade.php
+- documents/edit.blade.php
+- documents/show.blade.php
 
 ## Routes
-- `routes/web.php`
+- routes/web.php
 
 ---
 
@@ -177,7 +174,8 @@ http://192.168.100.118:8001
 ---
 
 # Status Project
-Project saat ini sudah berhasil membangun collaborative document editor sederhana berbasis Laravel dengan authentication, CRUD document, share link collaboration, live user presence, version history, dan conflict detection.
+Project saat ini sudah berhasil membangun collaborative document editor sederhana berbasis Laravel dengan authentication, CRUD document, share link collaboration, live user presence, activity tracking, version history, conflict resolution/detection, dan rich text editor. Sistem realtime collaborative editing penuh masih dalam tahap pengembangan menggunakan Laravel Reverb dan WebSocket.
+
 ---
 
 # Repository GitHub
