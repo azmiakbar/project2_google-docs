@@ -15,13 +15,17 @@
 
 <p>
     {{ $presenceCount }} user sedang membuka document ini
+
+    <br>
+
+    {{ $typingUsers }} user sedang mengetik...
 </p>
 
 <hr>
 
-<p id="document-content">
-    {{ $document->content }}
-</p>
+<div id="document-content">
+    {!! $document->content !!}
+</div>
 
 <hr>
 
@@ -38,7 +42,7 @@
         .listen('.document.updated', (e) => {
 
             document.getElementById('document-content')
-                .innerText = e.document.content;
+                .innerHTML = e.document.content;
 
         });
 </script>

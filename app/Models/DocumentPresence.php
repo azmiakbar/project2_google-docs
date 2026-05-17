@@ -9,5 +9,6 @@ class DocumentPresence extends Model
     protected $fillable = [
         'document_id',
         'user_id',
+        'is_typing',
     ];
 }

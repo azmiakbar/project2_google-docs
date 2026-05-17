@@ -61,8 +61,14 @@ class DocumentController extends Controller
             'document_id',
             $document->id
         )->count();
+
+        $typingUsers = DocumentPresence::where(
+            'document_id',
+            $document->id
+        )
+        ->where('is_typing', true)->count();
          
-         return view('documents.show', compact('document', 'presenceCount'));
+         return view('documents.show', compact('document', 'presenceCount', 'typingUsers'));
     }
 
     /**
@@ -71,6 +77,16 @@ class DocumentController extends Controller
     public function edit(string $id)
     {
         $document = Document::find($id);
+
+        DocumentPresence::updateOrCreate(
+            [
+                'document_id' => $document->id,
+                'user_id' => Auth::id(),
+            ],
+            [
+                'is_typing' => true,
+            ]
+        );
         
         return view('documents.edit', compact('document'));
     }
@@ -83,6 +99,13 @@ class DocumentController extends Controller
         $document = Document::find($id);
 
         if ($request->last_updated_at != $document->updated_at) {
+            
+            DocumentPresence::where('document_id', $document->id)
+                 ->where('user_id', Auth::id())
+                 ->update([
+                    'is_typing' => false,
+                ]);
+
             return back()->with(
                 'error',
                 'Dokumen sudah diubah oleh user lain.'
@@ -101,7 +124,17 @@ class DocumentController extends Controller
 
         ]);
 
-        broadcast(new DocumentUpdated($document))->toOthers();
+        // broadcast(new DocumentUpdated($document))->toOthers();
+
+        DocumentPresence::updateOrCreate(
+            [
+                'document_id' => $document->id,
+                'user_id' => Auth::id(),
+            ],
+            [
+                'is_typing' => false,
+            ]
+        );
         
         return redirect('/documents');
     }

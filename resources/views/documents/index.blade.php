@@ -25,7 +25,7 @@
 
         <br>
 
-        {{ $document->content }}
+        {!! $document->content !!}
 
         <br>
 
