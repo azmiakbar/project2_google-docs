@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Document;
 use App\Models\DocumentHistory;
+use App\Models\DocumentPresence;
+use App\Events\DocumentUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,8 +49,20 @@ class DocumentController extends Controller
     public function show(string $id)
     {
          $document = Document::findOrFail($id);
+
+         DocumentPresence::updateOrCreate(
+            [
+                'document_id' => $document->id,
+                'user_id' => Auth::id(),
+            ]
+        );
+
+        $presenceCount = DocumentPresence::where(
+            'document_id',
+            $document->id
+        )->count();
          
-         return view('documents.show', compact('document'));
+         return view('documents.show', compact('document', 'presenceCount'));
     }
 
     /**
@@ -68,6 +82,13 @@ class DocumentController extends Controller
     {
         $document = Document::find($id);
 
+        if ($request->last_updated_at != $document->updated_at) {
+            return back()->with(
+                'error',
+                'Dokumen sudah diubah oleh user lain.'
+            );
+        }
+
         DocumentHistory::create([
             'document_id' => $document->id,
             'user_id' => Auth::id(),
@@ -77,8 +98,10 @@ class DocumentController extends Controller
         $document->update([
         'title' => $request->title,
         'content' => $request->content,
-        
+
         ]);
+
+        broadcast(new DocumentUpdated($document))->toOthers();
         
         return redirect('/documents');
     }

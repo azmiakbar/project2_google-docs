@@ -1,3 +1,10 @@
+@if(session('error'))
+
+    <p style="color:red;">
+        {{ session('error') }}
+    </p>
+
+@endif
 <h1>Edit Dokumen</h1>
 
 <form action="/documents/{{ $document->id }}" method="POST">
@@ -5,6 +12,8 @@
     @csrf
 
     @method('PUT')
+
+    <input type="hidden" name="last_updated_at" value="{{ $document->updated_at }}">
 
     <label>Judul Dokumen</label>
     <br>

@@ -1,13 +1,25 @@
-<meta http-equiv="refresh" content="5">
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 <a href="/documents">
     Kembali
 </a>
 
 <h1>{{ $document->title }}</h1>
 
-<hr>
+<br>
+
+<a href="/documents/{{ $document->id }}/edit">
+    Edit Dokumen
+</a>
+
+<br><br>
 
 <p>
+    {{ $presenceCount }} user sedang membuka document ini
+</p>
+
+<hr>
+
+<p id="document-content">
     {{ $document->content }}
 </p>
 
@@ -20,3 +32,13 @@
 <p>
     Copy link ini untuk membuka dokumen di akun/user lain.
 </p>
+
+<script>
+    window.Echo.channel('document.{{ $document->id }}')
+        .listen('.document.updated', (e) => {
+
+            document.getElementById('document-content')
+                .innerText = e.document.content;
+
+        });
+</script>

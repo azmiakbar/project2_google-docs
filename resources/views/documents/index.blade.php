@@ -10,7 +10,7 @@
 
 <br>
 
-<meta http-equiv="refresh" content="5">
+
 <h1>Daftar Dokumen</h1>
 
 <a href="/documents/create">Buat Dokumen Baru</a>
