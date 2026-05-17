@@ -1,148 +1,170 @@
 # Real-Time Collaborative Document Editor (Google Docs)
 
 ## Deskripsi Project
-Project ini merupakan aplikasi collaborative document editor berbasis web yang dibuat menyerupai Google Docs menggunakan Laravel. Aplikasi memungkinkan user untuk membuat, membuka, mengedit, menghapus, dan membagikan document secara online.
+Project ini merupakan aplikasi collaborative document editor berbasis web yang dibuat menggunakan Laravel. Aplikasi ini dirancang menyerupai konsep dasar Google Docs dimana banyak user dapat membuka, mengedit, dan membagikan document secara online melalui share link.
 
-Pada progress saat ini, aplikasi sudah mendukung authentication user, CRUD document, document per-user, share link document, collaboration simulation antar device, serta version history untuk menyimpan riwayat perubahan document.
+Saat ini aplikasi sudah mendukung authentication, CRUD document, multi-user editing dasar, collaboration simulation, live user presence, version history, dan conflict detection.
 
-## Fitur yang Sudah Dibuat
+---
 
-### Authentication
+# Fitur yang Sudah Dibuat
+
+## Authentication
 - Login User
 - Register User
 - Logout User
 
-### CRUD Document
+## CRUD Document
 - Create Document
-- Read Document
+- Read/Open Document
 - Update Document
 - Delete Document
 
-### Document System
+## Document System
 - Open Document
 - Document Per User
 - Share Document Link
 - Multi-device Access
 
-### Collaboration Simulation
-- Auto Refresh setiap 5 detik
-- Simulasi collaborative editing sederhana
-- Perubahan document dapat terlihat di device lain
+## Collaboration Features
+- Multi-user Editing Dasar
+- Collaboration Simulation
+- Live User Presence
+- Share Link Collaboration
+- Realtime Foundation menggunakan Laravel Reverb
 
-### Version History
-- Menyimpan riwayat perubahan document
-- Menyimpan isi lama document
-- Menyimpan user yang melakukan perubahan
+## Versioning & Conflict System
+- Version History
+- Menyimpan Riwayat Perubahan Document
+- Menyimpan Isi Lama Document
+- Menyimpan User yang Melakukan Perubahan
+- Conflict Detection
+- Warning ketika document sudah diubah user lain
 
-## Teknologi yang Digunakan
-- Laravel
+---
+
+# Teknologi yang Digunakan
+- Laravel 12
 - Laravel Breeze
+- Laravel Reverb
+- Laravel Echo
 - PHP
 - Composer
 - Node.js
 - NPM
 - SQLite
+- Tailwind CSS
 - Git
 - GitHub
 
-## Progress Project
+---
+
+# Progress Project
+
 - [x] Setup Laravel Project
 - [x] Install Laravel Breeze
 - [x] Authentication Login
 - [x] Authentication Register
 - [x] Authentication Logout
-- [x] Setup GitHub Repository
-- [x] Create Document
-- [x] Read Document
-- [x] Update Document
-- [x] Delete Document
+- [x] CRUD Document
 - [x] Open Document
-- [x] Document Per User
-- [x] Share Document Link
+- [x] Share Link Document
 - [x] Multi-device Access
+- [x] Multi-user Editing Dasar
 - [x] Collaboration Simulation
+- [x] Live User Presence
 - [x] Version History
-- [ ] Realtime Collaborative Editing
-- [ ] Live User Presence
-- [ ] Conflict Resolution
-- [ ] Rich Text Editor
-- [ ] WebSocket Integration
+- [x] Conflict Detection
+- [x] Realtime Foundation (Laravel Reverb)
 
-## Struktur Project
+## Fitur yang Masih Dalam Pengembangan
+- [ ] Full Realtime Collaborative Editing
+- [ ] Live Cursor Tracking
 
-### Model
-- `app/Models/Document.php`
-- `app/Models/DocumentHistory.php`
+---
 
-### Controller
-- `app/Http/Controllers/DocumentController.php`
+# Struktur Project
 
-### Migration
+## Model
+- `Document.php`
+- `DocumentHistory.php`
+- `DocumentPresence.php`
+
+## Controller
+- `DocumentController.php`
+
+## Event
+- `DocumentUpdated.php`
+
+## Migration
 - `create_documents_table.php`
 - `create_document_histories_table.php`
+- `create_document_presences_table.php`
 
-### Views
+## Views
 - `documents/index.blade.php`
 - `documents/create.blade.php`
 - `documents/edit.blade.php`
 - `documents/show.blade.php`
 
-### Routes
+## Routes
 - `routes/web.php`
 
-## Cara Menjalankan Project
+---
 
-### 1. Clone Repository
+# Cara Menjalankan Project
+
+## 1. Clone Repository
 ```bash
 git clone https://github.com/azmiakbar/project2_google-docs.git
 ```
 
-### 2. Masuk ke Folder Project
+## 2. Masuk ke Folder Project
 ```bash
 cd project2_google-docs
 ```
 
-### 3. Install Dependency
+## 3. Install Dependency
 ```bash
 composer install
 npm install
 ```
 
-### 4. Jalankan Migration
+## 4. Jalankan Migration
 ```bash
 php artisan migrate
 ```
 
-### 5. Jalankan Laravel Server
+## 5. Build Frontend
 ```bash
-php artisan serve
+npm run build
 ```
 
-### 6. Jalankan Vite
-Buka terminal baru lalu jalankan:
-
-```bash
-npm run dev
-```
-
-### 7. Buka Browser
-```text
-http://127.0.0.1:8000
-```
-
-## Testing Collaboration Multi-device
-
-### Jalankan Laravel dengan Host
+## 6. Jalankan Laravel Server
 ```bash
 php artisan serve --host=0.0.0.0 --port=8001
 ```
 
-### Cari IPv4 Laptop
+## 7. Jalankan Laravel Reverb
+```bash
+php artisan reverb:start --host=0.0.0.0 --port=8080
+```
+
+## 8. Buka Browser
+```text
+http://127.0.0.1:8001
+```
+
+---
+
+# Testing Multi-device Collaboration
+
+## Cari IPv4 Laptop
 ```bash
 ipconfig
 ```
 
-### Buka di Device Lain
+## Buka di Device Lain
 ```text
 http://IP-LAPTOP:8001
 ```
@@ -152,8 +174,11 @@ Contoh:
 http://192.168.100.118:8001
 ```
 
-## Status Project
-Project saat ini sudah berhasil membangun collaborative document editor sederhana berbasis Laravel dengan authentication, CRUD document, document sharing, collaboration simulation antar device, dan version history.
+---
 
-## Repository GitHub
+# Status Project
+Project saat ini sudah berhasil membangun collaborative document editor sederhana berbasis Laravel dengan authentication, CRUD document, share link collaboration, live user presence, version history, dan conflict detection.
+---
+
+# Repository GitHub
 https://github.com/azmiakbar/project2_google-docs
