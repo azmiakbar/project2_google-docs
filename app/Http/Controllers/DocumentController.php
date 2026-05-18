@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Document;
 use App\Models\DocumentHistory;
 use App\Models\DocumentPresence;
+use App\Events\UserTyping;
 use App\Events\DocumentUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -124,7 +125,7 @@ class DocumentController extends Controller
 
         ]);
 
-        // broadcast(new DocumentUpdated($document))->toOthers();
+        broadcast(new DocumentUpdated($document))->toOthers();
 
         DocumentPresence::updateOrCreate(
             [
@@ -137,6 +138,17 @@ class DocumentController extends Controller
         );
         
         return redirect('/documents');
+    }
+
+    public function typing(string $id)
+    {
+        $document = Document::find($id);
+        
+        broadcast(new UserTyping($document))->toOthers();
+        
+        return response()->json([
+            'success' => true
+        ]);
     }
 
     /**

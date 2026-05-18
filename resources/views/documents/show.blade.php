@@ -9,11 +9,11 @@
 
 <h3>Nama Dokumen</h3>
 
-<div style="border:1px solid gray; padding:15px;">
+<span id="document-title">
 
     {{ $document->title }}
 
-</div>
+</span>
 
 <br>
 
@@ -29,16 +29,13 @@
     {{ $presenceCount }} user sedang membuka document ini
 </p>
 
-<p>
-    {{ $typingUsers }} user sedang mengedit document ini
-</p>
 
 <br><br>
 
 
 <h3>Isi Dokumen</h3>
 
-<div style="border:1px solid gray; padding:20px; min-height:120px;">
+<div id="document-content" style="border:1px solid gray; padding:20px; min-height:120px;">
 
     {!! $document->content !!}
 
@@ -53,3 +50,24 @@
     value="{{ url('/documents/' . $document->id) }}"
     readonly
 >
+
+<script>
+    window.addEventListener('load', function () {
+
+        console.log('Echo listener aktif');
+
+        window.Echo.channel('document.{{ $document->id }}')
+            .listen('.document.updated', (e) => {
+
+                console.log('Realtime masuk', e);
+
+                document.getElementById('document-content')
+                    .innerHTML = e.document.content;
+
+                document.getElementById('document-title')
+                    .innerText = e.document.title;
+
+            });
+
+    });
+</script>
