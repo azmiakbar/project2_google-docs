@@ -1,13 +1,25 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
-<a href="/documents">
+
+<a href="/documents"
+    style="color:blue;">
     Kembali
 </a>
 
-<h1>{{ $document->title }}</h1>
+<br><br>
+
+<h3>Nama Dokumen</h3>
+
+<div style="border:1px solid gray; padding:15px;">
+
+    {{ $document->title }}
+
+</div>
 
 <br>
 
-<a href="/documents/{{ $document->id }}/edit">
+<a href="/documents/{{ $document->id }}/edit"
+    style="color:blue;">
+
     Edit Dokumen
 </a>
 
@@ -15,34 +27,29 @@
 
 <p>
     {{ $presenceCount }} user sedang membuka document ini
-
-    <br>
-
-    {{ $typingUsers }} user sedang mengetik...
 </p>
 
-<hr>
+<p>
+    {{ $typingUsers }} user sedang mengedit document ini
+</p>
 
-<div id="document-content">
+<br><br>
+
+
+<h3>Isi Dokumen</h3>
+
+<div style="border:1px solid gray; padding:20px; min-height:120px;">
+
     {!! $document->content !!}
+
 </div>
 
 <hr>
 
 <h3>Share Link</h3>
 
-<input type="text" value="{{ url('/documents/' . $document->id) }}" readonly>
-
-<p>
-    Copy link ini untuk membuka dokumen di akun/user lain.
-</p>
-
-<script>
-    window.Echo.channel('document.{{ $document->id }}')
-        .listen('.document.updated', (e) => {
-
-            document.getElementById('document-content')
-                .innerHTML = e.document.content;
-
-        });
-</script>
+<input
+    type="text"
+    value="{{ url('/documents/' . $document->id) }}"
+    readonly
+>

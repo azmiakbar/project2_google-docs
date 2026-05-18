@@ -1,3 +1,5 @@
+<h1>Daftar Dokumen</h1>
+
 <form method="POST" action="{{ route('logout') }}">
 
     @csrf
@@ -10,34 +12,37 @@
 
 <br>
 
-
-<h1>Daftar Dokumen</h1>
-
-<a href="/documents/create">Buat Dokumen Baru</a>
+<a href="/documents/create">
+    Buat Dokumen Baru
+</a>
 
 <br><br>
 
 @foreach ($documents as $document)
 
-    <p>
+    <div style="border:1px solid gray; padding:15px; margin-bottom:15px;">
 
-        <strong>{{ $document->title }}</strong>
+        <h3>
+            {{ $document->title }}
+        </h3>
 
-        <br>
-
-        {!! $document->content !!}
-
-        <br>
+        <p>
+            {!! Str::limit(strip_tags($document->content), 100) !!}
+        </p>
 
         <a href="/documents/{{ $document->id }}">
             Open
         </a>
 
+        |
+
         <a href="/documents/{{ $document->id }}/edit">
             Edit
         </a>
 
-        <form action="/documents/{{ $document->id }}" method="POST">
+        |
+
+        <form action="/documents/{{ $document->id }}" method="POST" style="display:inline;">
 
             @csrf
 
@@ -49,6 +54,6 @@
 
         </form>
 
-    </p>
+    </div>
 
 @endforeach
