@@ -47,62 +47,52 @@
 <script>
     window.addEventListener('load', function () {
 
-        console.log('Halaman edit sudah load');
+        let typingTimer;
+        let isUpdatingFromRealtime = false;
+
+        function sendTyping() {
+            if (isUpdatingFromRealtime) {
+                return;
+            }
+
+            fetch('/documents/{{ $document->id }}/typing', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json'
+                }
+            });
+        }
 
         ClassicEditor
             .create(document.querySelector('#editor'))
             .then(editor => {
 
-                console.log('CKEditor aktif');
-
                 editor.model.document.on('change:data', () => {
-
-                    fetch('/documents/{{ $document->id }}/typing', {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            'Content-Type': 'application/json'
-                        }
-                    });
-
+                    sendTyping();
                 });
 
                 document.getElementById('title-input')
-    .addEventListener('input', () => {
-
-        fetch('/documents/{{ $document->id }}/typing', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                'Content-Type': 'application/json'
-            }
-        });
-
-    });
+                    .addEventListener('input', () => {
+                        sendTyping();
+                    });
 
                 if (!window.Echo) {
-                    console.log('Echo belum aktif di halaman edit');
                     return;
                 }
-
-                console.log('Realtime edit listener aktif');
 
                 window.Echo.channel('document.{{ $document->id }}')
                     .listen('.document.updated', (e) => {
 
-                        console.log('Realtime edit masuk', e);
-
-                        document.getElementById('editor-status')
-                            .innerText = 'User lain sedang berada di editor';
-
-                        setTimeout(function () {
-                            document.getElementById('editor-status')
-                                .innerText = 'Tidak ada user lain di editor';
-                        }, 3000);
+                        isUpdatingFromRealtime = true;
 
                         editor.setData(e.document.content);
 
                         document.querySelector('input[name="title"]').value = e.document.title;
+
+                        setTimeout(function () {
+                            isUpdatingFromRealtime = false;
+                        }, 500);
 
                     })
                     .listen('.user.typing', (e) => {
@@ -110,10 +100,12 @@
                         document.getElementById('editor-status')
                             .innerText = 'User lain sedang mengetik...';
 
-                        setTimeout(function () {
+                        clearTimeout(typingTimer);
+
+                        typingTimer = setTimeout(function () {
                             document.getElementById('editor-status')
                                 .innerText = 'Tidak ada user lain di editor';
-                        }, 3000);
+                        }, 700);
 
                     });
 

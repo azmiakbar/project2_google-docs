@@ -1,51 +1,61 @@
 # Real-Time Collaborative Document Editor
 
 ## Deskripsi Project
-Project ini adalah aplikasi collaborative document editor berbasis web menggunakan Laravel. Aplikasi ini dibuat menyerupai konsep dasar Google Docs, yaitu user dapat membuat, membuka, mengedit, dan membagikan dokumen secara online melalui share link.
+Project ini adalah aplikasi collaborative realtime document editor berbasis web menggunakan Laravel. Aplikasi ini dibuat menyerupai konsep dasar Google Docs, dimana banyak user dapat membuat, membuka, mengedit, dan mengupdate dokumen secara realtime tanpa refresh halaman.
 
-Project ini sudah mendukung multi-user editing, realtime document update, typing tracking sederhana, version history, conflict resolution, rich text editor, dan authentication user.
+Project ini mendukung authentication, multi-user editing, realtime collaboration, typing tracking, version history, conflict resolution, rich text editor, dan multi-device access menggunakan Laravel Reverb dan WebSocket.
 
 ---
 
-## Fitur Utama
+# Fitur Utama
 
-### Authentication
-- Register user
-- Login user
-- Logout user
+## Authentication
+- Register User
+- Login User
+- Logout User
 
-### Document Management
-- Create document
-- Read / open document
-- Update document
-- Delete document
-- Share link document
+---
 
-### Collaboration
-- Multi-user editing
-- Multi-device access
-- Realtime document update
-- Realtime title update
-- Realtime typing/activity tracking
-- Live user presence
+## Document Management
+- Create Document
+- Read / Open Document
+- Update Document
+- Delete Document
+- Share Link Document
 
-### Versioning & Conflict
-- Version history
-- Menyimpan isi dokumen sebelum di-update
-- Conflict detection
-- Warning ketika dokumen sudah diubah oleh user lain
+---
 
-### Rich Text Editor
+## Collaboration
+- Multi-user Editing
+- Multi-device Access
+- Realtime Document Update
+- Realtime Title Update
+- Realtime Typing Tracking
+- Live Activity Tracking
+- Live User Presence
+- Collaborative Realtime Editing
+
+---
+
+## Versioning & Conflict Resolution
+- Version History
+- Menyimpan Isi Lama Dokumen
+- Conflict Detection
+- Warning ketika dokumen sudah diubah user lain
+
+---
+
+## Rich Text Editor
 - CKEditor 5
-- Bold
-- Italic
+- Bold Text
+- Italic Text
 - Heading
-- Bullet list
-- Toolbar formatting
+- Bullet List
+- Toolbar Formatting
 
 ---
 
-## Teknologi yang Digunakan
+# Teknologi yang Digunakan
 - Laravel 12
 - Laravel Breeze
 - Laravel Reverb
@@ -59,98 +69,164 @@ Project ini sudah mendukung multi-user editing, realtime document update, typing
 - Tailwind CSS
 - Git
 - GitHub
+- WebSocket
 
 ---
 
-## Progress Project
+# Progress Project
 
-- [x] Setup Laravel project
-- [x] Authentication user
-- [x] CRUD document
-- [x] Share link document
-- [x] Multi-user editing
-- [x] Multi-device access
-- [x] Realtime document update
-- [x] Realtime typing tracking
-- [x] Live user presence
-- [x] Version history
-- [x] Conflict resolution
-- [x] Rich text editor
-- [x] UI sederhana untuk dashboard dan halaman dokumen
+- [x] Setup Laravel Project
+- [x] Authentication User
+- [x] CRUD Document
+- [x] Share Link Collaboration
+- [x] Multi-device Access
+- [x] Multi-user Editing
+- [x] Realtime Document Update
+- [x] Realtime Title Update
+- [x] Realtime Typing Tracking
+- [x] Live Activity Tracking
+- [x] Live User Presence
+- [x] Version History
+- [x] Conflict Resolution
+- [x] Rich Text Editor
+- [x] CKEditor Integration
+- [x] Collaborative Realtime Editing
+- [x] Dashboard UI Sederhana
+- [x] Open Document UI Sederhana
 
 ---
 
-## Cara Menjalankan Project
+# Struktur Project
 
-### 1. Clone Repository
+## Models
+- Document.php
+- DocumentHistory.php
+- DocumentPresence.php
+
+## Controllers
+- DocumentController.php
+
+## Events
+- DocumentUpdated.php
+- UserTyping.php
+
+## Views
+- documents/index.blade.php
+- documents/create.blade.php
+- documents/edit.blade.php
+- documents/show.blade.php
+
+## Routes
+- routes/web.php
+
+---
+
+# Cara Menjalankan Project
+
+## 1. Clone Repository
 ```bash
 git clone https://github.com/azmiakbar/project2_google-docs.git
 ```
 
-### 2. Masuk ke Folder Project
+---
+
+## 2. Masuk ke Folder Project
 ```bash
 cd project2_google-docs
 ```
 
-### 3. Install Dependency
+---
+
+## 3. Install Dependency
 ```bash
 composer install
 npm install
 ```
 
-### 4. Jalankan Migration
+---
+
+## 4. Jalankan Migration
 ```bash
 php artisan migrate
 ```
 
-### 5. Jalankan Laravel Server
+---
+
+## 5. Jalankan Laravel Server
 ```bash
 php artisan serve --host=0.0.0.0 --port=8001
 ```
 
-### 6. Jalankan Laravel Reverb
+---
+
+## 6. Jalankan Laravel Reverb
 ```bash
 php artisan reverb:start --host=0.0.0.0 --port=8080
 ```
 
-### 7. Jalankan Vite
+---
+
+## 7. Jalankan Vite
 ```bash
 npm run dev
 ```
 
-### 8. Buka Browser
+---
+
+## 8. Buka Browser
 ```text
 http://127.0.0.1:8001
 ```
 
 ---
 
-## Testing Multi-device
+# Testing Multi-device Collaboration
 
-Cari IP laptop:
-
+## Cari IPv4 Laptop
 ```bash
 ipconfig
 ```
 
-Buka dari device lain:
+---
 
+## Buka dari Device Lain
 ```text
 http://IP-LAPTOP:8001
 ```
 
 Contoh:
-
 ```text
 http://192.168.100.118:8001
 ```
 
 ---
 
-## Status Project
-Project saat ini sudah berhasil membangun collaborative document editor sederhana dengan fitur utama seperti multi-user editing, realtime document synchronization, realtime typing tracking, version history, conflict resolution, dan rich text editor.
+# Cara Kerja Realtime
+
+## User Mengedit Dokumen
+User melakukan perubahan pada judul atau isi dokumen.
+
+↓
+
+## Event Broadcast
+Laravel mengirim event realtime menggunakan Laravel Reverb dan WebSocket.
+
+↓
+
+## User Lain Menerima Event
+Laravel Echo menerima event realtime di browser user lain.
+
+↓
+
+## Dokumen Langsung Berubah
+Isi document, title, dan typing tracking langsung berubah tanpa refresh halaman.
 
 ---
 
-## Repository
+# Status Project
+Project saat ini sudah berhasil membangun collaborative realtime document editor sederhana menggunakan Laravel dengan fitur multi-user editing, realtime synchronization, realtime typing tracking, version history, conflict resolution, live activity tracking, dan rich text editor menggunakan Laravel Reverb dan WebSocket.
+
+---
+
+# Repository GitHub
 https://github.com/azmiakbar/project2_google-docs
